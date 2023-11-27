@@ -30,8 +30,7 @@ public class AccountController {
 	@PostMapping
 	public ResponseEntity<Object> createAccount(
 			@RequestParam(name = "customerId", required = true) @Parameter(description = "Customer ID") String customerId,
-			@RequestParam(name = "initialCredit", required = true) @Parameter(description = "Initial credit for the account") double initialCredit) {
-		System.err.println("test");
+			@RequestParam(name = "initialCredit", required = true) @Parameter(description = "Initial credit for the account") double initialCredit) {		
 		Account account = accountService.openNewAccount(customerId, initialCredit);
 		if (account != null) {
 			return ResponseEntity.status(HttpStatus.OK).body(account);
@@ -56,7 +55,6 @@ public class AccountController {
 		if (account.isActive()) {
 			return ResponseEntity.status(HttpStatus.OK).body(account);
 		} else {
-			System.err.println(" Not Active  ");
 			return ResponseEntity.status(HttpStatus.ACCEPTED).body(null);
 		}
 	}

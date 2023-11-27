@@ -22,7 +22,11 @@ public class AccountRepository {
         customersAccounts.add(new Account("100002", "CustomerName2", "Surname2", false));
         customersAccounts.add(new Account("100003", "CustomerName3", "Surname3", false));
     }
-
+   public  int getTotalAccounts() {
+	   
+   
+	   return customersAccounts.size(); 
+   }
     public Account findByCustomerId(String customerId) {
     	
         Optional< Account>  searchAccount= customersAccounts.stream()
