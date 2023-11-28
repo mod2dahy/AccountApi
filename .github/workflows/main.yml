@@ -26,7 +26,7 @@ jobs:
       run: mvn test
 
     - name: Build Docker image
-      run: docker build -t account-api:${{ github.run_number }} .
+      run: docker build -t mdahy911/account-api:${{ github.run_number }} .
 
     - name: Log in to Docker Hub
       run: |
