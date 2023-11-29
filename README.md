@@ -77,13 +77,13 @@ FROM openjdk:11-jre-slim
 WORKDIR /app
 
 # Copy the current directory contents into the container at /app
-COPY target/openapi-spring-1.0.0.jar /app
+COPY target/AccountApi-0.0.1-SNAPSHOT.jar /app
 
 # Make port 8082 available to the world outside this container
 EXPOSE 8082
 
 # Run the application when the container launches
-CMD ["java", "-jar", "openapi-spring-1.0.0.jar"]
+CMD ["java", "-jar", "AccountApi-0.0.1-SNAPSHOT.jar"]
 Build the Docker image and run the container:
 
 bash

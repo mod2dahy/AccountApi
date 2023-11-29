@@ -21,12 +21,8 @@ public class TransactionService {
     }
 
     public Transaction createTransaction(String customerId, double amount) {
-        Transaction transaction = new Transaction();
-        transaction.setUserCustomerId(customerId);
-        transaction.setAmount(amount);
-        transaction.setTransactionType(TransactionType.CREDIT);
+        Transaction transaction = new Transaction(customerId,TransactionType.DEBIT,amount);        
         // You may want to set other transaction details such as timestamp, description, etc.
-
         return transactionRepository.save(transaction);
     }
 

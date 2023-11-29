@@ -6,7 +6,15 @@ public class Transaction {
 	
 	
 	
-    private Long id;
+    public Transaction(String userCustomerId, TransactionType transactionType, double amount) {
+		super();
+		
+		this.transactionType = transactionType;
+		this.amount = amount;
+		this.userCustomerId = userCustomerId;
+	}
+
+	private Long id;
     
     public TransactionType getTransactionType() {
 		return transactionType;
