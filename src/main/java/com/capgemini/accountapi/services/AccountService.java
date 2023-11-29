@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.logging.Logger;
 
-
+import com.capgemini.accountapi.exception.AccountNotFoundException;
 import com.capgemini.accountapi.model.Account;
 import com.capgemini.accountapi.model.Transaction;
 import com.capgemini.accountapi.repository.AccountRepository;
@@ -29,7 +29,9 @@ public class AccountService {
         
         if (account == null) {
             LOGGER.warning("Account not found for customerId: " + customerId);
-            return null;
+            throw new AccountNotFoundException(customerId);
+
+
         }
 
         account.setActive(true);

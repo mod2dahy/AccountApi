@@ -1,5 +1,6 @@
 package com.capgemini.accountapi.controller;
 
+import com.capgemini.accountapi.exception.AccountNotFoundException;
 import com.capgemini.accountapi.model.Account;
 import com.capgemini.accountapi.repository.AccountRepository;
 import com.capgemini.accountapi.services.AccountService;
@@ -45,7 +46,7 @@ class AccountControllerTest {
         when(accountService.getAccountInformation(anyString())).thenReturn(new Account("3", "Jane", "Doe", true));
 
         mockMvc.perform(get("/api/accounts")
-                .param("accountId", "100001")
+                .param("customerId", "100001")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isAccepted());
      
@@ -67,13 +68,15 @@ class AccountControllerTest {
 
     @Test
     void createAccount_ReturnsNotFound() throws Exception {
-        when(accountService.openNewAccount(anyString(), anyDouble())).thenReturn(null);
+    	when(accountService.openNewAccount(anyString(), anyDouble()))
+        .thenThrow(new AccountNotFoundException("2"));
 
-        mockMvc.perform(post("/api/accounts")
-                .param("customerId", "2")
-                .param("initialCredit", "50.0")
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isNotFound());
+mockMvc.perform(post("/api/accounts")
+        .param("customerId", "2")
+        .param("initialCredit", "50.0")
+        .contentType(MediaType.APPLICATION_JSON))
+        .andExpect(status().isNotFound());
+
     }
 
 
@@ -82,7 +85,7 @@ class AccountControllerTest {
         when(accountService.getAccountInformation(anyString())).thenReturn(null);
 
         mockMvc.perform(get("/api/accounts")
-                .param("accountId", "1000")
+                .param("customerId", "1000")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound());
     }

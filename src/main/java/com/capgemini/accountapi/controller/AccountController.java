@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import com.capgemini.accountapi.exception.AccountNotFoundException;
 import com.capgemini.accountapi.model.Account;
 import com.capgemini.accountapi.services.AccountService;
 
@@ -37,8 +38,8 @@ public class AccountController {
     @ApiResponse(responseCode = "202", description = "Account not active")
     @GetMapping
     public ResponseEntity<Account> getAccount(
-            @RequestParam(name = "accountId", required = true) @Parameter(description = "Account ID") String accountId) {
-        Account account = accountService.getAccountInformation(accountId);
+            @RequestParam(name = "customerId", required = true) @Parameter(description = "Customer Id") String customerId) {
+        Account account = accountService.getAccountInformation(customerId);
 
         if (account == null) {
             return response(NOT_FOUND, null);
@@ -55,8 +56,17 @@ public class AccountController {
     public ResponseEntity<Object> createAccount(
             @RequestParam(name = "customerId", required = true) @Parameter(description = "Customer ID") String customerId,
             @RequestParam(name = "initialCredit", required = true) @Parameter(description = "Initial credit for the account") double initialCredit) {
-        Account account = accountService.openNewAccount(customerId, initialCredit);
-
-        return (account != null) ? response(OK, account) : response(NOT_FOUND, null);
+    	 try {
+             Account account = accountService.openNewAccount(customerId, initialCredit);
+             return (account != null) ? response(OK, account) : response(NOT_FOUND, null);
+         } catch (AccountNotFoundException ex) {
+             // Handle AccountNotFoundException and return appropriate response
+             return handleAccountNotFoundException(ex);
+         }
     }
+    @ExceptionHandler(AccountNotFoundException.class)
+    public ResponseEntity<Object> handleAccountNotFoundException(AccountNotFoundException ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+    }
+
 }
