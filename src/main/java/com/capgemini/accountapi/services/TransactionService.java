@@ -11,7 +11,7 @@ import java.util.List;
 
 
 @Service
-public class TransactionService {
+public class TransactionService implements ITransactionService{
 
     private final TransactionRepository transactionRepository;
 
