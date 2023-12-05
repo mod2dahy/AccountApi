@@ -7,7 +7,7 @@ WORKDIR /app
 # Copy the current directory contents into the container at /app
 COPY target/AccountApi-0.0.1-SNAPSHOT.jar /app
 
-# Make port 8080 available to the world outside this container
+# Make port 8082 available to the world outside this container
 EXPOSE 8082
 
 # Run application when the container launches
